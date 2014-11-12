@@ -10,7 +10,8 @@ This project is designed to make it easy. Currently Only have App Store version.
 You can clone this repo. Then open the project in  Assets/Example. It's a demo project for purchasing.
 
 If you want to export to IOS platform, you should follow standard operation of Unity3d.
-Anyway don't forget add StoreKit.framework in Xcode Project.
+
+Anyway don't forget add StoreKit.framework in Xcode Project : )
 
 ## Support Version ##
 
@@ -19,14 +20,15 @@ Anyway don't forget add StoreKit.framework in Xcode Project.
 
 ## Limitations and Future ##
 As this function model is in an project.so it's not convenient to install. I will try to make it easy to install.
-On the other hand ,I will add ios auto export and make ipa,which make export easily.
+
+On the other hand, I will add ios auto export and make ipa,which make export easily.
 
 
 ## License ##
 
 UIAP is published under MIT License
 
-    Copyright (c) 2014 SongYang Fan (@onevcat)
+    Copyright (c) 2014 SongYang Fan (@fansongy)
     
     Permission is hereby granted, free of charge, to any person obtaining a copy of
     this software and associated documentation files (the "Software"), to deal in
