@@ -31,12 +31,14 @@ public class MainActivity extends UnityPlayerActivity {
 		final String GOOGLE_TAG = "GoogleBilling";
 		List<String> m_reqSkuList = new ArrayList<String>();
 		
+		public static MainActivity currentActivity = null;
+		
 		String mCurPurchase = "";
 		 
 		@Override protected void onCreate (Bundle savedInstanceState)
 		{
 			super.onCreate(savedInstanceState);
-			
+			currentActivity = this;
 			//Get ConfigData From Manifest
 			ActivityInfo info = null;
 			try {

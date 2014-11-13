@@ -60,9 +60,9 @@ public class IAP : MonoBehaviour {
 			m_curCallback = callback;
 			if(Application.platform == RuntimePlatform.Android)
 			{
-				AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+				AndroidJavaClass jc = new AndroidJavaClass("com.uiap.MainActivity");
 				AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
-				Debug.Log(jo.Call<AndroidJavaObject>("getInfo"));
+				jo.Call("pay",order);
 			}
 			else if(Application.platform == RuntimePlatform.IPhonePlayer)
 			{
@@ -78,7 +78,17 @@ public class IAP : MonoBehaviour {
 		{
 			m_curCallback = callback;
 			Debug.Log("Call getItem");
-			getItems(jsonList);
+			if(Application.platform == RuntimePlatform.Android)
+			{
+				AndroidJavaClass jc = new AndroidJavaClass("com.uiap.MainActivity");
+				AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
+				jo.Call("getList",jsonList);
+			}
+			else if(Application.platform == RuntimePlatform.IPhonePlayer)
+			{
+				getItems(jsonList);
+			}
+
 		}
 	}
 	
