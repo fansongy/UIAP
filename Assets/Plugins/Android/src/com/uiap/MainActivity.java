@@ -12,6 +12,8 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.uiap.util.IabHelper;
@@ -86,8 +88,7 @@ public class MainActivity extends UnityPlayerActivity {
 						mHelper.queryInventoryAsync(mQueryItems);
 				   }
 				});
-		}
-		
+		}	
 		
 		final IabHelper.QueryInventoryFinishedListener 
 		   mQueryItems = new IabHelper.QueryInventoryFinishedListener() {
@@ -137,10 +138,6 @@ public class MainActivity extends UnityPlayerActivity {
 	                 return;
 	              }
 		      }
-
-//		      pay("item1");
-//           String jsonStr = "{\"items\":[\"item0\",\"item1\",\"item2\"]}";
-//		      getList(jsonStr);
 		   }
 		};
 		
@@ -159,8 +156,13 @@ public class MainActivity extends UnityPlayerActivity {
 				  		m_reqSkuList.add(list.getString(i));
 				  	}
 				}
-				mHelper.queryInventoryAsync(true, m_reqSkuList,
-						 mQueryItems);
+				new Handler(Looper.getMainLooper()).post(new Runnable() {             
+				    @Override
+				    public void run() { 
+				    	mHelper.queryInventoryAsync(true, m_reqSkuList,
+								 mQueryItems);
+				    }
+				  });
 
 			}
 			 catch (JSONException ex) 
