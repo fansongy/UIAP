@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package util;
+package com.uiap.util;
 
 import android.app.Activity;
 import android.app.PendingIntent;

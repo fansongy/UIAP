@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package util;
+package com.uiap.util;
 
 import android.text.TextUtils;
 import android.util.Log;

@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package util;
+package com.uiap.util;
 
 /**
  * Represents the result of an in-app billing operation.

@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package util;
+package com.uiap.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;

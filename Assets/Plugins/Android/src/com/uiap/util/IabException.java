@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package util;
+package com.uiap.util;
 
 /**
  * Exception thrown when something went wrong with in-app billing.
