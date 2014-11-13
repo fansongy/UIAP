@@ -53,11 +53,22 @@ public class IAP : MonoBehaviour {
 
 	public  void pay(string order,System.Action<string> callback)
 	{
+
 		if(Application.platform!= RuntimePlatform.OSXEditor)
 		{
+			Debug.Log("Call Pay on Android platform");
 			m_curCallback = callback;
-			Debug.Log("Call Pay");
-			pay(order);
+			if(Application.platform == RuntimePlatform.Android)
+			{
+				AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+				AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
+				Debug.Log(jo.Call<AndroidJavaObject>("getInfo"));
+			}
+			else if(Application.platform == RuntimePlatform.IPhonePlayer)
+			{
+				pay(order);
+			}
+
 		}
 	}
 
