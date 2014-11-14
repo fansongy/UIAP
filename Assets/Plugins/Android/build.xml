@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="HelloWorld" default="run" basedir=".">
+<property name="src" value="src"/>
+<property name="dest" value="classes"/>
+<property name="UIAP_jar" value="UIAP.jar"/>
+<target name="init">
+   <mkdir dir="${dest}"/>
+</target>
+<target name="compile" depends="init">
+   <javac srcdir="${src}" destdir="${dest}"/>
+</target>
+<target name="build" depends="compile">
+   <jar jarfile="${UIAP_jar}" basedir="${dest}"/>
+</target>
+<target name="clean">
+   <delete dir="${dest}" />
+</target>
+</project>
