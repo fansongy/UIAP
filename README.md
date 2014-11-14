@@ -4,25 +4,93 @@ UIAP
 ## What is this? ##
 After we developing the game by Unity3d, we need to add purchase model to make money. 
 
-This project is designed to make it easy. Currently Only have App Store version. Google Play will follow this verision.
+This project is designed to make it add In-App-Purchase easy. Currently support:
 
-## How to install and use? ##
-You can clone this repo. Then open the project in  Assets/Example. It's a demo project for purchasing.
+* App Store 
+* Google Billing 
 
-If you want to export to IOS platform, you should follow standard operation of Unity3d.
+## How to install? ##
+You can download [this package](https://www.dropbox.com/s/z3u27v0qxg9bzji/UIAP.unitypackage?dl=0)(i can't visit that url,[try this](http://pan.baidu.com/s/1o6iaZNk)) and import to Unity3d .
 
-Anyway don't forget add StoreKit.framework in Xcode Project : )
+Or you can clone this repo, copy `IAP` folder to `Assets/`. you should also copy the file under the `Plugins` to your `Assets/Plugins`.
+
+There's a demo project in `IAP/Example`,which show how to use the interface.
+
+## How to Use? ##
+After installing the plugin,we can use it by following code:
+
+### 1. getItems: get the information of the goods ###
+
+    string list = "{\"items\":[\"item0\",\"item1\",\"item2\"]}";
+    IAP.getInstance().getItemList(list,listBack);
+
+The first parameter is the skulist. Considering the number of the goods could increase, when we want to get the item info,we should offer the sku name.
+
+It should follow the json format,such as:
+
+    {
+        "items":
+        [
+            "item0",
+            "item1",
+            "item2"
+        ]
+    } 
+
+Second parameter is the callback,It should look like:
+
+    void listBack(string result)
+    {
+        //do something        
+    }
+
+Parameter of this function also follow json format.
+
+### 2. pay: purchase the goods ###
+
+    IAP.getInstance().pay("item0",payBack);
+
+The first parameter is sku of items. The second is callback which looks like:
+
+    void payBack(string result)
+    {
+        //do something
+    }
+
+
+## Export and Package ##
+After adding the interface, we should config the export settings.
+
+### App Store ###
+In order to add IAP into an App Store game,we should follow standard operation to export.
+
+1. Change the Bundle Identifier of your app.
+2. Keep your code sign of Xcode is correct.
+3. Add StoreKit.framework in Xcode Project.
+4. Connect your device and build the package.
+
+### Google Billing ###
+In order to add Google Billing into your game,we should follow standard operation to export.
+
+1. open AndroidManifest.xml in Assets/Plugins/Android. Change your public key of google billing. 
+2. you should also edit the defaultSku under the public key, which is used to update status when the app init.
+3. Change the Bundle Identifier of your app.
+4. Set your KeyStore.
+5. Export the package.
 
 ## Support Version ##
 
 * Unity3d v4+
 * IOS 6.0+
+* Google Billing v3
 
 ## Limitations and Future ##
-As this function model is in an project.so it's not convenient to install. I will try to make it easy to install.
 
-On the other hand, I will add ios auto export and make ipa,which make export easily.
+Currently the info which is passed between native code and Unity3d is hard Code,if you want change it you should change the file inside.
 
+Otherwise, there's no verification after purchase.
+
+I may work on those in the future.
 
 ## License ##
 
