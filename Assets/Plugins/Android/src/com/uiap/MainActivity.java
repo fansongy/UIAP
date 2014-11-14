@@ -142,7 +142,7 @@ public class MainActivity extends UnityPlayerActivity {
 		};
 		
 		
-		public void getList(String jsonStr)
+		public void getItems(String jsonStr)
 		{		
 			try
 			{

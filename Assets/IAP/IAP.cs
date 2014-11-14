@@ -82,7 +82,7 @@ public class IAP : MonoBehaviour {
 			{
 				AndroidJavaClass jc = new AndroidJavaClass("com.uiap.MainActivity");
 				AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
-				jo.Call("getList",jsonList);
+				jo.Call("getItems",jsonList);
 			}
 			else if(Application.platform == RuntimePlatform.IPhonePlayer)
 			{
