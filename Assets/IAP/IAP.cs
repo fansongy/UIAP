@@ -97,8 +97,34 @@ public class IAP : MonoBehaviour {
 
 	public void onPay(string payData)
 	{
-		m_curCallback(payData);
+		checkForServer(payData);
+	}
+
+	void checkForServer(string payData)
+	{
+		/*
+		 * the payData is from the google server or Apple server 
+		 *  we should use this data to check from our server.
+		 */ 
+
+		//As there is no server , I call the call back self... 
+		Invoke("onFakeSCheckForServer",1);
+	}
+
+	void onFakeSCheckForServer()
+	{
+		onCheckForServer(0,"Purchase Succee");
+	}
+
+	void onCheckForServer(int nResult,string message)
+	{
 		m_order = "";
+		if(nResult !=0)
+		{
+			Debug.LogError("check result is wrong");
+			return;
+		}
+		m_curCallback(message);
 	}
 
 	public void onGetItem(string itemList)
@@ -122,12 +148,12 @@ public class IAP : MonoBehaviour {
 	//this function is used to simulate call back from server
 	void onFakeRequestPayLoad()
 	{
-		onRequestPayLoad(1,"asdffdsa");
+		onRequestPayLoad(0,"asdffdsa");
 	}
 
 	public void onRequestPayLoad(int nResult,string payload)
 	{
-		if(nResult != 1) //get payload error
+		if(nResult != 0) //get payload error
 		{
 			Debug.LogError("get pay load error, msg from server is "+payload);
 			m_order = "";
