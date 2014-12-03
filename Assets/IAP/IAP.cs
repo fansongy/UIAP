@@ -65,7 +65,7 @@ public class IAP : MonoBehaviour {
 			m_order = order;
 			if(Application.platform == RuntimePlatform.Android)
 			{
-
+				requestPayLoad(order);
 			}
 			else if(Application.platform == RuntimePlatform.IPhonePlayer)
 			{
@@ -135,6 +135,6 @@ public class IAP : MonoBehaviour {
 		}
 		AndroidJavaClass jc = new AndroidJavaClass("com.uiap.MainActivity");
 		AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
-		jo.Call("pay",m_order,payload);
+		jo.Call("payWithPayLoad",m_order,payload);
 	}
 }

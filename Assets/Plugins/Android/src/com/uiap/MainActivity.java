@@ -172,10 +172,10 @@ public class MainActivity extends UnityPlayerActivity {
 			
 		}
 	
-		public void pay(String itemSKU)
+		public void payWithPayLoad(String itemSKU,String payLoad)
 		{
 			mCurPurchase = itemSKU;
-			mHelper.launchPurchaseFlow(this, itemSKU, 10001, mPurchaseFinishedListener);
+			mHelper.launchPurchaseFlow(this, itemSKU, 10001, mPurchaseFinishedListener,payLoad);
 		}
 		
 		IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
@@ -203,6 +203,16 @@ public class MainActivity extends UnityPlayerActivity {
 		           mHelper.consumeAsync(purchase, mConsumeFinishedListener);
 	  	        }
 
+	  	        JSONObject data = new JSONObject();
+	            try {
+					data.put("signature",purchase.getSignature());
+					data.put("purchase",purchase.toString());	
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	            //responds Unity3d purchase result
+	            UnityPlayer.UnitySendMessage("Bridge", "onPay", data.toString());
 	        }
 	    };
 
@@ -212,11 +222,7 @@ public class MainActivity extends UnityPlayerActivity {
   		        if (result.isSuccess()) {
   		           // provision the in-app purchase to the user
   		           // (for example, credit 50 gold coins to player's character)
-  		           Log.d(GOOGLE_TAG,"Consume "+ mCurPurchase+" Success");
-  		           
-  		           //responds Unity3d purchase result
-  		           UnityPlayer.UnitySendMessage("Bridge", "onPay", purchase.getOrderId());
-  		           
+  		           Log.d(GOOGLE_TAG,"Consume "+ mCurPurchase+" Success");  		           
   		       }
   		       else {
   		           // handle error
