@@ -35,10 +35,14 @@ public class IAP : MonoBehaviour {
 	public static extern void pay(string order);
 
 	[DllImport ("__Internal")]
+	public static extern void payWithPayLoad(string order,string payLoad);
+
+	[DllImport ("__Internal")]
 	public static extern void getItems(string jsonList);
 
 	static IAP s_instance = null;
 	System.Action<string> m_curCallback  = null;
+	string m_order;
 	
 	public static IAP getInstance()
 	{
@@ -58,11 +62,10 @@ public class IAP : MonoBehaviour {
 		{
 			Debug.Log("Call Pay on Android platform");
 			m_curCallback = callback;
+			m_order = order;
 			if(Application.platform == RuntimePlatform.Android)
 			{
-				AndroidJavaClass jc = new AndroidJavaClass("com.uiap.MainActivity");
-				AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
-				jo.Call("pay",order);
+
 			}
 			else if(Application.platform == RuntimePlatform.IPhonePlayer)
 			{
@@ -91,14 +94,47 @@ public class IAP : MonoBehaviour {
 
 		}
 	}
-	
+
 	public void onPay(string payData)
 	{
 		m_curCallback(payData);
+		m_order = "";
 	}
 
 	public void onGetItem(string itemList)
 	{
 		m_curCallback(itemList);
+	}
+
+	void requestPayLoad(string order)
+	{
+		/*
+		 * we should connect to our verify server in this function
+		 * the parameter server needed may be device id , user name ,order,platform and so on
+		 * server will make a payload by some kind of algorithm 
+		 * then it will call our call back function.
+		 */ 
+
+		//As there is no server , I call the call back self... 
+		Invoke("onFakeRequestPayLoad",1);
+	}
+				
+	//this function is used to simulate call back from server
+	void onFakeRequestPayLoad()
+	{
+		onRequestPayLoad(1,"asdffdsa");
+	}
+
+	public void onRequestPayLoad(int nResult,string payload)
+	{
+		if(nResult != 1) //get payload error
+		{
+			Debug.LogError("get pay load error, msg from server is "+payload);
+			m_order = "";
+			return;
+		}
+		AndroidJavaClass jc = new AndroidJavaClass("com.uiap.MainActivity");
+		AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
+		jo.Call("pay",m_order,payload);
 	}
 }
