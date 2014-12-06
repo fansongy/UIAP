@@ -30,13 +30,16 @@ using System.Collections;
 using System.Runtime.InteropServices;
 
 public class IAP : MonoBehaviour {
-	
+
+#if UNITY_IOS
 	[DllImport ("__Internal")]
 	public static extern void pay(string order);
+#endif
 
+#if UNITY_ANDROID
 	[DllImport ("__Internal")]
 	public static extern void payWithPayLoad(string order,string payLoad);
-
+#endif
 	[DllImport ("__Internal")]
 	public static extern void getItems(string jsonList);
 
@@ -83,9 +86,11 @@ public class IAP : MonoBehaviour {
 			Debug.Log("Call getItem");
 			if(Application.platform == RuntimePlatform.Android)
 			{
+#if UNITY_ANDROID
 				AndroidJavaClass jc = new AndroidJavaClass("com.uiap.MainActivity");
 				AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
 				jo.Call("getItems",jsonList);
+#endif
 			}
 			else if(Application.platform == RuntimePlatform.IPhonePlayer)
 			{
@@ -159,8 +164,10 @@ public class IAP : MonoBehaviour {
 			m_order = "";
 			return;
 		}
+#if UNITY_ANDROID
 		AndroidJavaClass jc = new AndroidJavaClass("com.uiap.MainActivity");
 		AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
 		jo.Call("payWithPayLoad",m_order,payload);
+#endif
 	}
 }
