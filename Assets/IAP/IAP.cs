@@ -34,12 +34,11 @@ public class IAP : MonoBehaviour {
 #if UNITY_IOS
 	[DllImport ("__Internal")]
 	public static extern void pay(string order);
-#endif
-
-#if UNITY_ANDROID
+#elif UNITY_ANDROID
 	[DllImport ("__Internal")]
 	public static extern void payWithPayLoad(string order,string payLoad);
 #endif
+
 	[DllImport ("__Internal")]
 	public static extern void getItems(string jsonList);
 
@@ -66,15 +65,12 @@ public class IAP : MonoBehaviour {
 			Debug.Log("Call Pay on Android platform");
 			m_curCallback = callback;
 			m_order = order;
-			if(Application.platform == RuntimePlatform.Android)
-			{
-				requestPayLoad(order);
-			}
-			else if(Application.platform == RuntimePlatform.IPhonePlayer)
-			{
-				pay(order);
-			}
 
+			#if UNITY_ANDROID
+				requestPayLoad(order);
+			#elif UNITY_IOS
+				pay(order);
+			#endif
 		}
 	}
 
@@ -86,15 +82,13 @@ public class IAP : MonoBehaviour {
 			Debug.Log("Call getItem");
 			if(Application.platform == RuntimePlatform.Android)
 			{
-#if UNITY_ANDROID
+			#if UNITY_ANDROID
 				AndroidJavaClass jc = new AndroidJavaClass("com.uiap.MainActivity");
 				AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
 				jo.Call("getItems",jsonList);
-#endif
-			}
-			else if(Application.platform == RuntimePlatform.IPhonePlayer)
-			{
+			#elif UNITY_IOS
 				getItems(jsonList);
+			#endif
 			}
 
 		}
