@@ -177,10 +177,19 @@
             //NSLog(@"Product price: %@" ,[myProduct[i] price]);
             //NSLog(@"Product id: %@" ,[myProduct[i] productIdentifier]);
             
+            NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+            [numberFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+            [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+            [numberFormatter setLocale:[myProduct[i] priceLocale]];
+            
+            NSLocale* storeLocale = [myProduct[i] priceLocale];
+            NSString *storeCountry = (NSString*)CFLocaleGetValue((CFLocaleRef)storeLocale, kCFLocaleCountryCode);
+            NSString *finalPirce = [storeCountry stringByAppendingString: [NSString stringWithFormat:@"%d", [[myProduct[i] price] intValue]] ];
+            
             myDict = [NSDictionary dictionaryWithObjectsAndKeys:
                             [myProduct[i] localizedTitle], @"title",
                             [myProduct[i] localizedDescription], @"desc",
-                            [myProduct[i] price], @"price",
+                            finalPirce, @"price",
                             [myProduct[i] productIdentifier], @"product", nil];
             
             [dict setValue: myDict forKey: [myProduct[i] productIdentifier]];
@@ -292,14 +301,14 @@
     NSString* receipt = [self encode:(uint8_t *)transaction.transactionReceipt.bytes
 									   length:transaction.transactionReceipt.length];
     
-	NSString* iden = transaction.transactionIdentifier;
+//	NSString* iden = transaction.transactionIdentifier;
     
-    UnitySendMessage("Bridge", "onPay",iden.UTF8String);
+    UnitySendMessage("Bridge", "onPay",receipt.UTF8String);
 
 //	std::string re = [receipt UTF8String];
 //	std::string idens = [iden UTF8String];
 //	std::string final = re + "-" + idens;
-
+    
 }
 
 @end

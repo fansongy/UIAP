@@ -1,5 +1,14 @@
 package com.uiap;
 
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.Signature;
+import java.security.SignatureException;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -300,8 +309,39 @@ public class MainActivity extends UnityPlayerActivity {
 	         * Using your own server to store and verify developer payloads across app
 	         * installations is recommended.
 	         */
+	        boolean result = false;
+            try {
+                String info = p.getOriginalJson().toString();
+                String sign = p.getSignature();         
 
-	        return true;
+                byte[] keyBytes = Base64.decode(base64EncodedPublicKey,Base64.DEFAULT); 
+
+                X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(keyBytes);
+
+                KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+
+                PublicKey publicKey2 = keyFactory.generatePublic(x509EncodedKeySpec);
+                Log.d(GOOGLE_TAG,publicKey2.toString());
+                Signature signature = Signature.getInstance("SHA1WithRSA");
+                signature.initVerify(publicKey2);
+                signature.update(info.getBytes());
+                result =signature.verify(Base64.decode(sign.getBytes(),Base64.DEFAULT));
+                
+            } catch (NoSuchAlgorithmException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (InvalidKeySpecException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (InvalidKeyException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (SignatureException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            Log.d(GOOGLE_TAG,"verify result is "+result);
+            return result;
 	    }
 	 
 }
