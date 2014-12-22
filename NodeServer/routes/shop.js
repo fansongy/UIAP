@@ -132,37 +132,30 @@ exports.verify = function(userId, type, strInfo, strSig, callback) {
     {
         logger.debug(userId," App Store --- purchase info: ",strInfo);
 
-        var ret = {
-            status : -1,
-            msg:""
-        };
         var msg  = JSON.stringify({"receipt-data":strInfo})
-        async.series([
+        async.waterfall([
             function(cb) {
                 appleIapVerify(appleValidateHost, appleValidatePath, userId, strInfo, msg, function(data){
-                    ret = data;
-                    logger.debug(userId,"check App store",ret);
-                    cb(null);
+                    logger.debug(userId,"check App store",data);
+                    cb(null,data);
                 });
             },
-            function(cb) {
+            function(preCheck,cb) {
                 // Still waitting for the app store check
-                if (ret.status == SandBoxVerifyErrorNo ) {
-
+                if (preCheck.status == SandBoxVerifyErrorNo ) {
                     appleIapVerify(appleSandboxValidateHost, appleValidatePath, userId, strInfo, msg, function(data){
-                        ret = data;
-                        if(ret.status != 0)
+                        if(data.status != 0)
                         {
-                            logger.debug(userId,"check App store sandbox still error",ret);
-                            cb(ret);
+                            logger.debug(userId,"check App store sandbox still error",data);
+                            cb(data);
                         }
                         else
                         {
-                           cb(null,ret); 
+                           cb(null,data); 
                         }
                     });
                 } else {
-                    cb(ret);
+                    cb(preCheck);
                 }
             }],
             function(err,result) {
@@ -172,7 +165,7 @@ exports.verify = function(userId, type, strInfo, strSig, callback) {
                 }
                 else
                 {
-                    callback(null,result[1]);
+                    callback(null,result);
                 }      
             }
         );
