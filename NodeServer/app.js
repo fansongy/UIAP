@@ -8,6 +8,8 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+var myLogger = require('./routes/logger');
+
 var app = express();
 
 // view engine setup
@@ -56,5 +58,24 @@ app.use(function(err, req, res, next) {
     });
 });
 
+var logConf = {
+    "levels" : {
+        "MAIN" : "debug"
+    },
+    "appenders" : [
+        {
+            "category"   : "MAIN",
+            "type"       : "file",
+            "filename"   : "log/websvc.log",
+            "layout"     : 
+            {
+                "type"   : "pattern",
+                "pattern": "[%d] %p %m"
+            } 
+        }
+    ]
+}
+
+myLogger.init(logConf);
 
 module.exports = app;
