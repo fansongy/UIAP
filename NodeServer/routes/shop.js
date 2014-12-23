@@ -5,8 +5,7 @@ var logger = require('./logger');
 var async = require('async');
 var https = require('https');
 
-// const PCN = "iapSample.ylyq.com";
-const PCN = "com.ylyq.pandora";
+const PCN = "iapSample.ylyq.com";
 
 var GOOGLE_PUBLIC_KEY_BASE64 = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAla7Z7tl7xGftCiJeA2rjJ1O/pfHjSb7mhHs64e0PTaPQcDsasIesf07iCSScACKtCHN8fzTW0t5eqjfgjKJkAkx6fRtizIyO09q9yDGwvQAj+lVbvjwRBG7kaI4moWMgwCFQQ6UNgjNrpO8KXojrkR3wjv72UeqIZ22F4U4+FBoIr+M2PqZ4utXpvUsh2H0zYsxj8uE771Xhemjk9jBFxnFMxWHAcSLS+rQatuS3/NohM4u2plo08xHP/nkSgLSmmBdnu4tQa4lzrsvzUI4qbFEgZbkCv+F2r4ml8Ot4NZjAvJ4JpOVj7bHhLU8Xkw3SfVGUCWOxn8iqyVpGrX50FQIDAQAB";
 
@@ -224,7 +223,9 @@ exports.verify = function(userId, type, strInfo, strSig, callback) {
         //The product info should config somewhere,and can be found by sku
 
         var coinOfSku = 1000;
-        callback(null,coinOfSku);
+        ret.status = 0;
+        ret.msg  = coinOfSku;
+        callback(null,ret);
     }
     else //unknown platform
     {

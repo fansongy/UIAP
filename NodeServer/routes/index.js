@@ -17,7 +17,7 @@ router.post('/shop/verify',function(req,res){
 	shop.verify(userId, type, purchase, sig, function(err, data) {
 		if(err)
 		{
-			res.status(err.status).json({
+			res.status(400).json({
 				result: err.status,
 				msg:data
 			})
@@ -25,7 +25,7 @@ router.post('/shop/verify',function(req,res){
 		else
 		{
 			res.status(200).json({
-				result:0,
+				result:data.status,
 				msg:data.msg
 			})
 		}
