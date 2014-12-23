@@ -27,9 +27,16 @@ public class testPay : MonoBehaviour {
 
 	}
 
-	void payBack(string result)
+	void payBack(System.Int64 result)
 	{
-		m_data = result;
+		if(result == -1)
+		{
+			m_data = "purchase fail";
+		}
+		else
+		{
+			m_data = "User get "+result+" coins";
+		}
 	}
 
 	void listBack(string result)

@@ -217,7 +217,7 @@ exports.verify = function(userId, type, strInfo, strSig, callback) {
         }
         
         var sku = purchaseInfo['productId'];
-        logger.debug("google verify ok ", userId, sku, amount);
+        logger.debug("google verify ok ", userId, sku);
 
         //You should send product to user below 
         //The product info should config somewhere,and can be found by sku
