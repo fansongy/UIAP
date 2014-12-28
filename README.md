@@ -9,12 +9,22 @@ This project is designed to make it add In-App-Purchase easy. Currently support:
 * App Store 
 * Google Billing 
 
-## How to install? ##
-You can download [this package](https://www.dropbox.com/s/z3u27v0qxg9bzji/UIAP.unitypackage?dl=0)(i can't visit that url,[try this](http://pan.baidu.com/s/1o6iaZNk)) and import to Unity3d .
+As a solution, UIAP include client and server. The server is based on Express of Node.js. The server code is used to verify purchase,you can run it in your host. 
 
-Or you can clone this repo, copy `IAP` folder to `Assets/`. you should also copy the file under the `Plugins` to your `Assets/Plugins`.
+## How to install? ##
+
+### Client ###
+You can download [this package](https://www.dropbox.com/s/w4a3pt64a49you9/UIAP_v1.1.unitypackage?dl=0)(i can't visit that url,[try this](http://pan.baidu.com/s/1eQs1Kbw)) and import to Unity3d .
+
+Or you can clone this repo, copy `IAP` folder to `Client/Assets/`. you should also copy the file under the `Plugins` to your `Assets/Plugins`.
 
 There's a demo project in `IAP/Example`,which show how to use the interface.
+
+### Server ###
+You can copy all file in `NodeServer` to your host, and type under code:
+
+	node bin/www
+Doing that will run the express. Anyway, you may need to change the server ip which client connect, it should be configed in `IAP.cs`.
 
 ## How to Use? ##
 After installing the plugin,we can use it by following code:
@@ -88,7 +98,6 @@ In order to add Google Billing into your game,we should follow standard operatio
 
 Currently the info which is passed between native code and Unity3d is hard Code,if you want change it you should change the file inside.
 
-Otherwise, there's no verification after purchase.
 
 I may work on those in the future.
 
