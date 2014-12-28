@@ -3,6 +3,12 @@
  * 
  * To use this component , it should be attached to camera
  * 
+ * version: 1.1
+ * 
+ * Author: SongYang Fan 
+ *
+ * Project: https://github.com/fansongy/UIAP   
+ * 
  */ 
 
 using UnityEngine;

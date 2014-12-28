@@ -1,0 +1,13 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../slot/Assets/Scripts/Common/WebServiceClient.cs">
+    <Files>
+      <File FileName="../slot/Assets/Scripts/Loading/LoadingSceneCtrl.cs" Line="85" Column="11" />
+      <File FileName="../slot/Assets/Scripts/Common/WebServiceClient.cs" Line="61" Column="24" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

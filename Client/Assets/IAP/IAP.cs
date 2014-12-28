@@ -1,6 +1,7 @@
 ﻿/*
  * This class is designed to add In-App Purchaes
  * 
+ * 
  * Currently,there are two interface which use as follow:
  * 
  * Usage:
@@ -22,6 +23,11 @@
  *  They are in Plugins/IOS. After export the xcode project,they will be copyed to Library/ folder.
  *  Before you connect you deivce to debug, makesure your xcode team and Bundle Identifier is correct. You also need to add StoreKit.framewrok
  * 		
+ * version: 1.1
+ * 
+ * Author: SongYang Fan 
+ *
+ * Project: https://github.com/fansongy/UIAP  
  * 
  */ 
 
@@ -49,7 +55,7 @@ public class IAP : MonoBehaviour {
 
 	string m_order;
 
-	string Request_URL = "http://192.168.1.102:3000/shop/verify";
+	string Request_URL = "http://192.168.1.107:3000/shop/verify";
 
 	public static IAP getInstance()
 	{

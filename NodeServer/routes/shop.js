@@ -5,6 +5,7 @@ var logger = require('./logger');
 var async = require('async');
 var https = require('https');
 
+//------ APP INFO -----------
 const PCN = "iapSample.ylyq.com";
 
 var GOOGLE_PUBLIC_KEY_BASE64 = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAla7Z7tl7xGftCiJeA2rjJ1O/pfHjSb7mhHs64e0PTaPQcDsasIesf07iCSScACKtCHN8fzTW0t5eqjfgjKJkAkx6fRtizIyO09q9yDGwvQAj+lVbvjwRBG7kaI4moWMgwCFQQ6UNgjNrpO8KXojrkR3wjv72UeqIZ22F4U4+FBoIr+M2PqZ4utXpvUsh2H0zYsxj8uE771Xhemjk9jBFxnFMxWHAcSLS+rQatuS3/NohM4u2plo08xHP/nkSgLSmmBdnu4tQa4lzrsvzUI4qbFEgZbkCv+F2r4ml8Ot4NZjAvJ4JpOVj7bHhLU8Xkw3SfVGUCWOxn8iqyVpGrX50FQIDAQAB";
@@ -13,6 +14,8 @@ var appleSandboxValidateHost = "sandbox.itunes.apple.com";
 var appleValidateHost = "buy.itunes.apple.com";
 var appleValidatePath = "/verifyReceipt";
 var SandBoxVerifyErrorNo = 21007;
+
+//--------------------------
 
 function verifyGoogleSig(body, sig) {
     var genPublicKey =function(key)
@@ -113,7 +116,6 @@ function appleIapVerify(host, path, userId, purchaseId, body, callback) {
     });
 
     if (body) {
-        // reqApple.write(JSON.stringify(body));
         reqApple.write(body);
     }
 
@@ -178,7 +180,6 @@ exports.verify = function(userId, type, strInfo, strSig, callback) {
             status : 0
         };
 
-        //var rsaResult = verifyGoogleSig(GOOGLE_PUBLIC_KEY_BASE64, strInfo,strSig);
         var rsaResult = verifyGoogleSig(strInfo,strSig);
         if (true !== rsaResult) {
             logger.error(userId, "sig mismatch", strInfo, strSig);
@@ -187,7 +188,6 @@ exports.verify = function(userId, type, strInfo, strSig, callback) {
             return;
         }
 
-        //find amount in skus
         var purchaseInfo = null;
         try {
             purchaseInfo = JSON.parse(strInfo);
